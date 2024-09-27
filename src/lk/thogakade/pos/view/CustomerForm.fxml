@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="context" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.thogakade.pos.controller.CustomerFormController">
+   <children>
+      <Label layoutX="24.0" layoutY="21.0" text="Customer Management">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="540.0" layoutY="22.0" onAction="#backToHomeOnAction" prefHeight="26.0" prefWidth="28.0" style="-fx-background-color: #7f8c8d;" text="🏠" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="269.0" layoutY="22.0" onAction="#manageLoyaltyCardOnAction" style="-fx-background-color: #e67e22;" text="Manage Loyalty Card" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="416.0" layoutY="22.0" onAction="#addNewCustomerOnAction" style="-fx-background-color: #349#34495e8db;" text="+ New Customer" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <Separator layoutX="24.0" layoutY="59.0" prefHeight="0.0" prefWidth="544.0" />
+      <TextField fx:id="txtEmail" layoutX="24.0" layoutY="78.0" prefHeight="34.0" prefWidth="182.0" promptText="email" />
+      <TextField fx:id="txtName" layoutX="219.0" layoutY="78.0" prefHeight="34.0" prefWidth="182.0" promptText="name" />
+      <TextField fx:id="txtContact" layoutX="416.0" layoutY="78.0" prefHeight="34.0" prefWidth="150.0" promptText="contact" />
+      <TextField fx:id="txtSalary" layoutX="24.0" layoutY="122.0" prefHeight="34.0" prefWidth="127.0" promptText="salary" />
+      <JFXButton fx:id="btnSaveCustomer" buttonType="RAISED" layoutX="454.0" layoutY="122.0" onAction="#saveCustomerOnAction" prefHeight="34.0" prefWidth="111.0" style="-fx-background-color: #f1c40f;" text="Save Customer" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <TextField fx:id="txtSearchHere" layoutX="159.0" layoutY="122.0" prefHeight="34.0" prefWidth="286.0" promptText="search here" />
+      <TableView fx:id="table" layoutX="24.0" layoutY="168.0" prefHeight="218.0" prefWidth="544.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="53.60003662109375" text="ID" />
+          <TableColumn fx:id="colEmail" prefWidth="131.99993896484375" text="email" />
+            <TableColumn fx:id="colName" prefWidth="104.79998779296875" text="name" />
+            <TableColumn fx:id="colContact" prefWidth="81.5999755859375" text="contact" />
+            <TableColumn fx:id="colSalary" prefWidth="88.0" text="salary" />
+            <TableColumn fx:id="colOperate" prefWidth="85.5999755859375" text="operate" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
