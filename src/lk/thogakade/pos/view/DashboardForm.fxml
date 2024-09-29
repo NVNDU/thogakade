@@ -21,7 +21,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="300.0" layoutY="75.0" onAction="#projectManagementOnAction" prefHeight="107.0" prefWidth="254.0" style="-fx-background-color: #e67e22;" text="Product Management" textFill="#fafafa">
+      <JFXButton buttonType="RAISED" layoutX="300.0" layoutY="75.0" onAction="#productManagementOnAction" prefHeight="107.0" prefWidth="254.0" style="-fx-background-color: #e67e22;" text="Product Management" textFill="#fafafa">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

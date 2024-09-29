@@ -74,20 +74,21 @@ public class CustomerFormController {
     private void loadAllCustomers(String searchText) throws SQLException, ClassNotFoundException {
         ObservableList<CustomerTm> observableList = FXCollections.observableArrayList();
         int counter =1;
-        Button btn = new Button("Delete");
+
         for (CustomerDto dto:searchText.length()>0?DatabaseAccessCode.searchCustomer(searchText):
                 DatabaseAccessCode.findAllCustomer()) {
+            Button btn = new Button("Delete");
             CustomerTm tm = new CustomerTm(
                 counter, dto.getName(), dto.getEmail(), dto.getContact(), dto.getSalary(),btn
             );
             observableList.add(tm);
             counter++;
 
-            btn.setOnAction(e->{
+            btn.setOnAction((e)->{
                 try {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure ?", ButtonType.NO, ButtonType.YES);
                     Optional<ButtonType> selectedButtonType = alert.showAndWait();
-                    if (selectedButtonType.equals(ButtonType.YES)){
+                    if (selectedButtonType.get().equals(ButtonType.YES)){
                         if (DatabaseAccessCode.deleteCustomer(dto.getEmail())){
                             new Alert(Alert.AlertType.CONFIRMATION,"Customer Deleted!").show();
                             loadAllCustomers(searchText);

@@ -1,5 +1,6 @@
 package lk.thogakade.pos.dao;
 
+import javafx.scene.control.Alert;
 import lk.thogakade.pos.db.DbConnection;
 import lk.thogakade.pos.dto.CustomerDto;
 import lk.thogakade.pos.dto.UserDto;
@@ -18,7 +19,6 @@ public class DatabaseAccessCode {
         preparedStatement.setString(2, PasswordManager.encryptPassword(password));
         return preparedStatement.executeUpdate() > 0;
     }
-
     public static UserDto findUser(String email) throws ClassNotFoundException, SQLException {
         String sql = "SELECT * FROM user WHERE email= ?";
         PreparedStatement preparedStatement = DbConnection.getInstance().getConnection().prepareStatement(sql);
@@ -73,6 +73,7 @@ public class DatabaseAccessCode {
     public static boolean deleteCustomer(String email) throws ClassNotFoundException, SQLException {
         String sql = "DELETE FROM customer WHERE email = ?";
         PreparedStatement preparedStatement = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        preparedStatement.setString(1,email);
         return preparedStatement.executeUpdate() > 0;
     }
     public static List<CustomerDto> findAllCustomer() throws ClassNotFoundException, SQLException {
@@ -111,6 +112,39 @@ public class DatabaseAccessCode {
             ));
         }
         return dtos;
+    }
+
+    //product management
+
+    public static int getLastProductId() throws SQLException, ClassNotFoundException {
+        String sql = "SELECT code FROM product ORDER BY code DESC LIMIT 1";
+        PreparedStatement preparedStatement = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()){
+            return resultSet.getInt(1)+1;
+        }
+        return 1;
+    }
+    public static boolean createProduct(int code, String description) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT INTO product VALUES (?,?)";
+        PreparedStatement preparedStatement = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        preparedStatement.setInt(1,code);
+        preparedStatement.setString(2,description);
+        return preparedStatement.executeUpdate() > 0;
+    }
+    public static boolean updateProduct(int code,String description) throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE product SET description = ? WHERE code = ?";
+        PreparedStatement preparedStatement = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        preparedStatement.setInt(2,code);
+        preparedStatement.setString(1,description);
+        return preparedStatement.executeUpdate() > 0;
+    }
+    public static boolean deleteProduct(int code) throws SQLException, ClassNotFoundException {
+        String sql = "DELETE FROM product WHERE code = ?";
+        PreparedStatement preparedStatement = DbConnection.getInstance().getConnection().prepareStatement(sql);
+        preparedStatement.setInt(1,code);
+        return preparedStatement.executeUpdate()  > 0;
     }
 
 }

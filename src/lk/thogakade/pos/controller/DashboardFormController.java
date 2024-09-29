@@ -15,7 +15,8 @@ public class DashboardFormController {
         setUi("CustomerForm");
     }
 
-    public void projectManagementOnAction(ActionEvent actionEvent) {
+    public void productManagementOnAction(ActionEvent actionEvent) throws IOException {
+        setUi("ProductMaintainForm");
     }
 
     public void placeOrderOnAction(ActionEvent actionEvent) {
@@ -31,4 +32,6 @@ public class DashboardFormController {
         Stage stage = (Stage) context.getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/"+location+".fxml"))));
     }
+
+
 }
