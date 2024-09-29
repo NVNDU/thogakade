@@ -20,17 +20,17 @@ public class DatabaseAccessCode {
         return preparedStatement.executeUpdate() > 0;
     }
     public static UserDto findUser(String email) throws ClassNotFoundException, SQLException {
-        String sql = "SELECT * FROM user WHERE email= ?";
-        PreparedStatement preparedStatement = DbConnection.getInstance().getConnection().prepareStatement(sql);
-        preparedStatement.setString(1,email);
-
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()){
-            return new UserDto(
-                    resultSet.getString(1),
-                    resultSet.getString(2)
-            );
-        }
+//        String sql = "SELECT * FROM user WHERE email= ?";
+//        PreparedStatement preparedStatement = DbConnection.getInstance().getConnection().prepareStatement(sql);
+//        preparedStatement.setString(1,email);
+//
+//        ResultSet resultSet = preparedStatement.executeQuery();
+//        if (resultSet.next()){
+//            return new UserDto(
+//                    resultSet.getString(1),
+//                    resultSet.getString(2)
+//            );
+//        }
         return null;
     }
 
