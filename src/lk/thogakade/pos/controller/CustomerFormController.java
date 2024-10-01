@@ -75,8 +75,8 @@ public class CustomerFormController {
         ObservableList<CustomerTm> observableList = FXCollections.observableArrayList();
         int counter =1;
 
-        for (CustomerDto dto:searchText.length()>0?DatabaseAccessCode.searchCustomer(searchText):
-                DatabaseAccessCode.findAllCustomer()) {
+        for (CustomerDto dto:searchText.length()>0?new DatabaseAccessCode().searchCustomer(searchText):
+                new DatabaseAccessCode().findAllCustomer()) {
             Button btn = new Button("Delete");
             CustomerTm tm = new CustomerTm(
                 counter, dto.getName(), dto.getEmail(), dto.getContact(), dto.getSalary(),btn
@@ -89,7 +89,7 @@ public class CustomerFormController {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure ?", ButtonType.NO, ButtonType.YES);
                     Optional<ButtonType> selectedButtonType = alert.showAndWait();
                     if (selectedButtonType.get().equals(ButtonType.YES)){
-                        if (DatabaseAccessCode.deleteCustomer(dto.getEmail())){
+                        if (new DatabaseAccessCode().deleteCustomer(dto.getEmail())){
                             new Alert(Alert.AlertType.CONFIRMATION,"Customer Deleted!").show();
                             loadAllCustomers(searchText);
                         }else {
@@ -123,7 +123,7 @@ public class CustomerFormController {
     public void saveCustomerOnAction(ActionEvent actionEvent) {
         try{
             if (btnSaveCustomer.getText().equals("Save Customer")){
-                if (DatabaseAccessCode.createCustomer(
+                if (new DatabaseAccessCode().createCustomer(
                         txtEmail.getText(),txtName.getText(),txtContact.getText(),Double.parseDouble(txtSalary.getText())
                 )){
                     new Alert(Alert.AlertType.CONFIRMATION,"Customer Saved!").show();
@@ -133,7 +133,7 @@ public class CustomerFormController {
                     new Alert(Alert.AlertType.WARNING,("Try Again!")).show();
                 }
             }else {
-                if (DatabaseAccessCode.updateCustomer(
+                if (new DatabaseAccessCode().updateCustomer(
                         txtEmail.getText(),txtName.getText(),txtContact.getText(),Double.parseDouble(txtSalary.getText())
                 )){
                     new Alert(Alert.AlertType.CONFIRMATION,"Customer Updated!").show();

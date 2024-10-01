@@ -23,7 +23,7 @@ public class SignupFormController {
 
     public void registerOnAction(ActionEvent actionEvent){
         try{
-            if (DatabaseAccessCode.createUser(txtEmail.getText(),txtPassword.getText())){ //INSERT/ UPDATE/ DELETE
+            if (new DatabaseAccessCode().createUser(txtEmail.getText(),txtPassword.getText())){ //INSERT/ UPDATE/ DELETE
                 new Alert(Alert.AlertType.CONFIRMATION,"User Saved!").show();
                 clearFields();
             }else {
