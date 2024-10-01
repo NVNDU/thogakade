@@ -1,5 +1,6 @@
 package lk.thogakade.pos.dao;
 
+import enums.DaoType;
 import javafx.scene.control.Alert;
 import lk.thogakade.pos.dao.custom.CustomerDao;
 import lk.thogakade.pos.dao.custom.ProductDao;
@@ -20,18 +21,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseAccessCode {
-    CustomerDao customerDao = new CustomerDaoImpl();
-    ProductDao productDao = new ProductDaoImpl();
-    UserDao userDao = new UserDaoImpl();
+//    CustomerDao customerDao = new CustomerDaoImpl();
+//    ProductDao productDao = new ProductDaoImpl();
+//    UserDao userDao = new UserDaoImpl();
+
+    CustomerDao customerDao = (CustomerDao) DaoFactory.getInstance().getDao(DaoType.CUSTOMER);
+    ProductDao productDao = (ProductDao) DaoFactory.getInstance().getDao(DaoType.PRODUCT);
+    UserDao userDao = (UserDao) DaoFactory.getInstance().getDao(DaoType.USER);
     // User Management
     public boolean createUser(String email,String password) throws ClassNotFoundException, SQLException {
-        return userDao.saveUser(
+        return userDao.save(
                 new User(email,password)
         );
     }
     public UserDto findUser(String email) throws ClassNotFoundException, SQLException {
 
-        User user = userDao.findUser(email);
+        User user = userDao.find(email);
         if (user!=null){
             return new UserDto(
                     user.getEmail(),
@@ -43,17 +48,17 @@ public class DatabaseAccessCode {
 
     //Customer Management
     public boolean createCustomer(String email, String name, String contact, double salary) throws ClassNotFoundException, SQLException {
-       return customerDao.saveCustomer(
+       return customerDao.save(
                new Customer(email,name,contact,salary)
        );
     }
     public boolean updateCustomer(String email, String name, String contact, double salary) throws ClassNotFoundException, SQLException {
-        return customerDao.updateCustomer(
+        return customerDao.update(
                 new Customer(email,name,contact,salary)
         );
     }
     public CustomerDto findCustomer(String email) throws ClassNotFoundException, SQLException {
-        Customer customer = customerDao.findCustomer(email);
+        Customer customer = customerDao.find(email);
         if (customer!=null){
             return new CustomerDto(
                     customer.getEmail(),
@@ -65,11 +70,11 @@ public class DatabaseAccessCode {
         return null;
     }
     public boolean deleteCustomer(String email) throws ClassNotFoundException, SQLException {
-        return customerDao.deleteCustomer(email);
+        return customerDao.delete(email);
     }
     public List<CustomerDto> findAllCustomer() throws ClassNotFoundException, SQLException {
         List<CustomerDto> dtos = new ArrayList<>();
-        for (Customer customer:customerDao.findAllCustomers()) {
+        for (Customer customer:customerDao.findAll()) {
             dtos.add(new CustomerDto(
                     customer.getEmail(),
                     customer.getName(),
@@ -100,17 +105,17 @@ public class DatabaseAccessCode {
         return productDao.getLastProductId();
     }
     public boolean createProduct(int code, String description) throws SQLException, ClassNotFoundException {
-        return productDao.saveProduct(
+        return productDao.save(
                 new Product(code,description)
         );
     }
     public boolean updateProduct(int code,String description) throws SQLException, ClassNotFoundException {
-        return productDao.updateProduct(
+        return productDao.update(
                 new Product(code,description)
         );
     }
     public boolean deleteProduct(int code) throws SQLException, ClassNotFoundException {
-        return productDao.deleteProduct(code);
+        return productDao.delete(code);
     }
 
 }
