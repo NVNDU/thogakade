@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import lk.thogakade.pos.dao.DatabaseAccessCode;
+import lk.thogakade.pos.bo.custom.impl.UserBoImpl;
 import lk.thogakade.pos.dto.UserDto;
 import lk.thogakade.pos.util.PasswordManager;
 
@@ -25,7 +25,7 @@ public class LoginFormController {
 
     public void signInOnAction(ActionEvent actionEvent) {
         try{
-            UserDto ud  = new DatabaseAccessCode().findUser(txtEmail.getText());
+            UserDto ud  = new UserBoImpl().findUser(txtEmail.getText());
             if (ud!=null){
                 if (PasswordManager.checkPassword(txtPassword.getText(),ud.getPassword())){
                     setUi("DashboardForm");

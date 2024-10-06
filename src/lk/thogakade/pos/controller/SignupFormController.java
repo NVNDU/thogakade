@@ -7,7 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.thogakade.pos.dao.DatabaseAccessCode;
+import lk.thogakade.pos.bo.custom.impl.CustomerBoImpl;
+import lk.thogakade.pos.bo.custom.impl.UserBoImpl;
+import lk.thogakade.pos.dto.UserDto;
 import lk.thogakade.pos.util.PasswordManager;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class SignupFormController {
 
     public void registerOnAction(ActionEvent actionEvent){
         try{
-            if (new DatabaseAccessCode().createUser(txtEmail.getText(),txtPassword.getText())){ //INSERT/ UPDATE/ DELETE
+            if (new UserBoImpl().saveUser(new UserDto(txtEmail.getText(),txtPassword.getText()))){ //INSERT/ UPDATE/ DELETE
                 new Alert(Alert.AlertType.CONFIRMATION,"User Saved!").show();
                 clearFields();
             }else {
