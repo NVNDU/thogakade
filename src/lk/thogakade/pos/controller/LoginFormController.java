@@ -10,8 +10,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.thogakade.pos.bo.BoFactory;
+import lk.thogakade.pos.bo.custom.UserBo;
 import lk.thogakade.pos.bo.custom.impl.UserBoImpl;
 import lk.thogakade.pos.dto.UserDto;
+import lk.thogakade.pos.enums.BoType;
 import lk.thogakade.pos.util.PasswordManager;
 
 import java.io.IOException;
@@ -22,10 +25,10 @@ public class LoginFormController {
     public TextField txtPassword;
     public AnchorPane context;
 
-
+    UserBo bo = BoFactory.getInstance().getBo(BoType.USER);
     public void signInOnAction(ActionEvent actionEvent) {
         try{
-            UserDto ud  = new UserBoImpl().findUser(txtEmail.getText());
+            UserDto ud  = bo.findUser(txtEmail.getText());
             if (ud!=null){
                 if (PasswordManager.checkPassword(txtPassword.getText(),ud.getPassword())){
                     setUi("DashboardForm");

@@ -11,9 +11,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.thogakade.pos.bo.BoFactory;
 import lk.thogakade.pos.bo.custom.CustomerBo;
 import lk.thogakade.pos.bo.custom.impl.CustomerBoImpl;
 import lk.thogakade.pos.dto.CustomerDto;
+import lk.thogakade.pos.enums.BoType;
 import lk.thogakade.pos.view.tm.CustomerTm;
 
 import java.io.IOException;
@@ -37,6 +39,7 @@ public class CustomerFormController {
     public JFXButton btnSaveCustomer;
     private String searchText = "";
 
+    CustomerBo bo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
     public void initialize() throws SQLException, ClassNotFoundException {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -76,8 +79,8 @@ public class CustomerFormController {
         ObservableList<CustomerTm> observableList = FXCollections.observableArrayList();
         int counter =1;
 
-        for (CustomerDto dto:searchText.length()>0?new CustomerBoImpl().searchCustomers(searchText):
-                new CustomerBoImpl().findAllCustomers()) {
+        for (CustomerDto dto:searchText.length()>0?bo.searchCustomers(searchText):
+                bo.findAllCustomers()) {
             Button btn = new Button("Delete");
             CustomerTm tm = new CustomerTm(
                 counter, dto.getName(), dto.getEmail(), dto.getContact(), dto.getSalary(),btn
@@ -90,7 +93,7 @@ public class CustomerFormController {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure ?", ButtonType.NO, ButtonType.YES);
                     Optional<ButtonType> selectedButtonType = alert.showAndWait();
                     if (selectedButtonType.get().equals(ButtonType.YES)){
-                        if (new CustomerBoImpl().deleteCustomer(dto.getEmail())){
+                        if (bo.deleteCustomer(dto.getEmail())){
                             new Alert(Alert.AlertType.CONFIRMATION,"Customer Deleted!").show();
                             loadAllCustomers(searchText);
                         }else {
@@ -124,7 +127,7 @@ public class CustomerFormController {
     public void saveCustomerOnAction(ActionEvent actionEvent) {
         try{
             if (btnSaveCustomer.getText().equals("Save Customer")){
-                if (new CustomerBoImpl().saveCustomer(
+                if (bo.saveCustomer(
                         new CustomerDto(txtEmail.getText(),txtName.getText(),txtContact.getText(),Double.parseDouble(txtSalary.getText()))
                 )){
                     new Alert(Alert.AlertType.CONFIRMATION,"Customer Saved!").show();
@@ -134,7 +137,7 @@ public class CustomerFormController {
                     new Alert(Alert.AlertType.WARNING,("Try Again!")).show();
                 }
             }else {
-                if (new CustomerBoImpl().updateCustomer(
+                if (bo.updateCustomer(
 //                        txtEmail.getText(),txtName.getText(),txtContact.getText(),Double.parseDouble(txtSalary.getText())
                         new CustomerDto(txtEmail.getText(),txtName.getText(),txtContact.getText(),Double.parseDouble(txtSalary.getText()))
                 )){
