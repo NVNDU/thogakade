@@ -1,20 +1,14 @@
 package lk.thogakade.pos.dao;
 
-import enums.DaoType;
-import javafx.scene.control.Alert;
+import lk.thogakade.pos.enums.DaoType;
 import lk.thogakade.pos.dao.custom.CustomerDao;
 import lk.thogakade.pos.dao.custom.ProductDao;
 import lk.thogakade.pos.dao.custom.UserDao;
-import lk.thogakade.pos.dao.custom.impl.CustomerDaoImpl;
-import lk.thogakade.pos.dao.custom.impl.ProductDaoImpl;
-import lk.thogakade.pos.dao.custom.impl.UserDaoImpl;
-import lk.thogakade.pos.db.DbConnection;
 import lk.thogakade.pos.dto.CustomerDto;
 import lk.thogakade.pos.dto.UserDto;
 import lk.thogakade.pos.entity.Customer;
 import lk.thogakade.pos.entity.Product;
 import lk.thogakade.pos.entity.User;
-import lk.thogakade.pos.util.PasswordManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,9 +19,9 @@ public class DatabaseAccessCode {
 //    ProductDao productDao = new ProductDaoImpl();
 //    UserDao userDao = new UserDaoImpl();
 
-    CustomerDao customerDao = (CustomerDao) DaoFactory.getInstance().getDao(DaoType.CUSTOMER);
-    ProductDao productDao = (ProductDao) DaoFactory.getInstance().getDao(DaoType.PRODUCT);
-    UserDao userDao = (UserDao) DaoFactory.getInstance().getDao(DaoType.USER);
+    CustomerDao customerDao =  DaoFactory.getInstance().getDao(DaoType.CUSTOMER);
+    ProductDao productDao = DaoFactory.getInstance().getDao(DaoType.PRODUCT);
+    UserDao userDao = DaoFactory.getInstance().getDao(DaoType.USER);
     // User Management
     public boolean createUser(String email,String password) throws ClassNotFoundException, SQLException {
         return userDao.save(
